@@ -1,0 +1,91 @@
+<div class="container mt-4">
+    <!-- Título del calendario -->
+    <h4 class="text-center">ADI's Totales</h4>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row mb-3">
+      <!-- Formulario de búsqueda -->
+      <div class="col-12">
+        <form class="form-inline">
+          <input
+            type="search"
+            (ngModelChange)="searchTotals(key.value)"
+            #key="ngModel"
+            ngModel
+            name="key"
+            id="searchName"
+            class="form-control"
+            placeholder="ID de usuario..."
+          />
+        </form>
+      </div>
+    </div>
+</div>
+
+<!-- Contenedor principal -->
+<div class="container" id="main-container">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID de Usuario</th>
+          <th>Correo</th>
+          <th>Carrera</th>
+          <th>Académicas</th>
+          <th>Deportivas</th>
+          <th>Culturales</th>
+          <th>Sociedad</th>
+          <th>ASUA</th>
+          <th>Penalizaciones</th>
+          <th>Total</th>
+          <th>Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let total of totals" [ngClass]="{'highlight-row': total.totalEvents >= 5}">
+          <td>{{total?.user?.id}}</td>
+          <td>{{total?.user?.username}}</td>
+          <td>{{total?.user?.carrera}}</td>
+          <td>{{total?.academicEvents}}</td>
+          <td>{{total?.sportEvents}}</td>
+          <td>{{total?.culturalEvents}}</td>
+          <td>{{total?.sociedadEvents}}</td>
+          <td>{{total?.asuaEvents}}</td>
+          <td>{{total?.penalty}}</td>
+          <td>{{total?.totalEvents}}</td>
+          <td>
+            <span *ngIf="total.totalEvents >= 5 && 
+                        total.academicEvents > 0 &&
+                        total.sportEvents > 0 &&
+                        total.culturalEvents > 0 &&
+                        total.sociedadEvents > 0 &&
+                        total.asuaEvents > 0; else crossMark">
+              <i class="fa fa-check" style="color: orange;"></i>
+            </span>
+            <ng-template #crossMark>
+              <i class="fa fa-times" style="color: red;"></i> 
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+
+    <!-- Controles de paginación -->
+    <div class="d-flex justify-content-center my-4">
+      <button (click)="previousPage()" id="pag-button" class="btn btn" [disabled]="currentPage === 1">
+      <i class="fa fa-chevron-left"></i>
+      </button>
+      <span class="mx-3">Página {{currentPage}}</span>
+      <button (click)="nextPage()" id="pag-button" class="btn btn" [disabled]="currentPage * pageSize >= totalItems">
+      <i class="fa fa-chevron-right"></i>
+      </button>
+  </div>
+
+
+
+</div>

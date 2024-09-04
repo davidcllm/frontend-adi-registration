@@ -1,0 +1,13 @@
+@if(isLoggedIn) {
+    @if(userRole == 'ROLE_USER') {
+        <app-user-navbar></app-user-navbar>
+        <router-outlet></router-outlet>
+    }
+    @else {
+        <app-admin-navbar></app-admin-navbar>
+        <router-outlet></router-outlet>
+    }
+}
+@else {
+    <app-login></app-login>
+}

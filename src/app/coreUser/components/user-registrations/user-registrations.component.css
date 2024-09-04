@@ -1,0 +1,43 @@
+.list-group {
+  min-height: 260px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-details p {
+  margin: 0;
+  padding: 4px 0;
+}
+
+.progress-wheel {
+  margin-left: 20px;
+}
+
+.progress-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-text {
+  font-size: 18px;
+  font-weight: bold;
+}
+  

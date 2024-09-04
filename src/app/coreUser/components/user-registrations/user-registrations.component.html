@@ -1,0 +1,111 @@
+<div class="container mt-4">
+    <!-- Título del calendario -->
+    <h4 class="text-center">Recuento de ADI's</h4>
+    <br>
+    <h6 class="text-center">Recuerda que para cumplir con el requisito debes registrar al menos 5 ADI's y al menos una de cada tipo</h6>
+</div>
+
+<br>
+
+<!-- Contenedor principal -->
+<div class="container" id="main-container">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-xl-3">
+          <div class="card m-b-30">
+            <div class="card-body row">
+              <div class="card-title align-self-center mb-0">
+                <h5>{{total?.user?.id}}</h5>
+                <p class="m-0">{{total?.user?.username}}</p>
+              </div>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Académicas: {{total?.academicEvents}}</li>
+              <li class="list-group-item">Deportivas: {{total?.sportEvents}}</li>
+              <li class="list-group-item">Culturales: {{total?.culturalEvents}}</li>
+              <li class="list-group-item">Sociedad: {{total?.sociedadEvents}}</li>
+              <li class="list-group-item">ASUA: {{total?.asuaEvents}}</li>
+              <li class="list-group-item">Penalizaciones: {{total?.penalty}}</li>
+              <li class="list-group-item">Total: {{total?.totalEvents}}</li>
+            </ul>
+            <div class="card-body">
+              <div class="float-right btn-group btn-group-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      
+        <!-- Contenedor de la Rueda de Progreso -->
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+          <div class="progress-wheel" *ngIf="total">
+            <div class="progress-circle" [style.background]="'conic-gradient(#027bff ' + (total.totalEvents * 20) + '%, lightgray ' + (total.totalEvents * 20) + '%)'">
+              <div class="progress-text">
+                {{total.totalEvents}} / 5
+              </div>
+            </div>
+          </div>
+        </div>
+        
+    </div>   
+
+    <br>
+
+    <div class="container mt-4">
+        <!-- Título del calendario -->
+        <h4 class="text-center">Detalle de cada Registro</h4>
+    </div>
+    
+    <br>
+
+    <div class="row"> 
+      <!-- Bucle para mostrar cada registro -->
+      <div *ngFor="let registration of registrations" class="col-md-6 col-xl-3">
+        <div class="card m-b-30">
+          <div class="card-body row">
+            <div class="card-title align-self-center mb-0">
+              <!-- aprob y id del registro -->
+              <h5>{{registration?.aprobado}}</h5>
+              <p class="m-0">ID del registro: {{registration?.id}}</p>
+              <p class="m-0">ID del evento: {{registration?.event?.id}}</p>
+              <p class="m-0">Tipo de evento: {{registration?.event?.tipo}}</p>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <!-- Estado de escaneo -->
+            <li class="list-group-item">
+              Escaneo: 
+              <span *ngIf="registration?.scan; else crossMark">
+                <i class="fa fa-check" style="color: orange;"></i>
+              </span>
+              <ng-template #crossMark>
+                <i class="fa fa-times" style="color: red;"></i>
+              </ng-template>
+            </li>
+            <!-- id del usuario -->
+            <li class="list-group-item">ID de usuario: {{registration?.user?.id}}</li>
+            <li class="list-group-item">Evento: {{registration?.event?.eventName}}</li>
+            <li class="list-group-item"><i class="fa fa-calendar float-right"></i>Fecha del evento: {{formatDate(registration?.event?.fecha)}}</li>
+            <li class="list-group-item">Hora del evento: {{formatTime(registration?.event?.hora)}}</li>
+          </ul>
+          <div class="card-body">
+            <!-- Botones para editar y eliminar eventos -->
+            <div class="float-right btn-group btn-group-sm">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+<!-- Notificación de que no hay pregistros -->
+<div *ngIf="registrations?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No hay registros!</h4>
+      <p>No encontramos ningún registro.</p>
+    </div>
+</div>

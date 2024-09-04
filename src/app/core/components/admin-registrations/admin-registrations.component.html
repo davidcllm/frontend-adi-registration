@@ -1,0 +1,152 @@
+<div class="container mt-4">
+    <!-- Título del calendario -->
+    <h4 class="text-center">Registros</h4>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row mb-3">
+      <!-- Formulario de búsqueda -->
+      <div class="col-12">
+        <form class="form-inline">
+          <input
+            type="search"
+            (ngModelChange)="searchTotals(key.value)"
+            #key="ngModel"
+            ngModel
+            name="key"
+            id="searchName"
+            class="form-control"
+            placeholder="ID de usuario, Estado de Aprobación o Nombre del evento..."
+          />
+        </form>
+      </div>
+    </div>
+</div>
+
+<!-- Contenedor principal -->
+<div class="container" id="main-container">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID de Usuario</th>
+          <th>Correo</th>
+          <th>ID de Registro</th>
+          <th>Estado de Aprobación</th>
+          <th>Fotos</th>
+          <th>Escaneo</th>
+          <th>ID de Evento</th>
+          <th>Nombre de Evento</th>
+          <th>Aprobar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let registration of registrations">
+          <td>{{registration?.user?.id}}</td>
+          <td>{{registration?.user?.username}}</td>
+          <td>{{registration?.id}}</td>
+          <td>{{registration?.aprobado}}</td>
+          <td><a (click)="onOpenModal(registration, 'photo')" class="btn btn tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-photo"></i> </a></td>
+          <td>
+            <span *ngIf="registration?.scan; else crossMark">
+              <i class="fa fa-check" style="color: orange;"></i>
+            </span>
+            <ng-template #crossMark>
+              <i class="fa fa-times" style="color: red;"></i>
+            </ng-template>
+          </td>
+          <td>{{registration?.event?.id}}</td>
+          <td>{{registration?.event?.eventName}}</td>
+          <td><a (click)="onOpenModal(registration, 'edit')"  class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a></td>
+          <td><a (click)="onOpenModal(registration, 'delete')" class="btn btn-warning tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+
+    <!-- Controles de paginación -->
+    <div class="d-flex justify-content-center my-4">
+      <button (click)="previousPage()" id="pag-button" class="btn btn" [disabled]="currentPage === 1">
+      <i class="fa fa-chevron-left"></i>
+      </button>
+      <span class="mx-3">Página {{currentPage}}</span>
+      <button (click)="nextPage()" id="pag-button" class="btn btn" [disabled]="currentPage * pageSize >= totalItems">
+      <i class="fa fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Modal para editar un registro -->
+  <div class="modal fade" id="updateRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateRegistrationModalLabel">Aprobar Registro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">    
+            <p>¿Estás seguro que quieres aprobar el registro con el ID {{editRegistration?.id}}?</p>
+            <div class="modal-footer">
+              <button (click)="patchApprovalStatus(editRegistration!.id, 'PENALIZADO')" data-dismiss="modal" id="edit-event-form" class="btn btn-danger">Penalizar</button>
+              <button (click)="patchApprovalStatus(editRegistration!.id, 'APROBADO')" data-dismiss="modal" id="edit-event-form" class="btn btn-primary">Aprobar</button>
+              <!--el boton va a insertar los datos recogidos en formato .json-->
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para eliminar un registro -->
+  <div class="modal fade" id="deleteRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Eliminar Registro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro que quieres eliminar el registro con el ID {{deleteRegistration?.id}}?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button (click)="onDeleteRegistration(deleteRegistration!.id)" class="btn btn-danger" data-dismiss="modal">Sí</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para enseniar la foto -->
+  <div class="modal fade" id="searchPhotoModal" tabindex="-1" role="dialog" aria-labelledby="photoModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="qrModelLabel">Foto del registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body text-center">
+        <div *ngIf="imageUrl">
+            <img [src]="imageUrl" alt="La URL de la imagen ha expirado." class="img-fluid"/>
+            <!--br>
+            <br>
+            <p class="text-left" style="word-wrap: break-word;">Link de descarga: {{imageUrl}}</p-->
+        </div>
+        <div *ngIf="!imageUrl">
+            <p>No hay foto disponible por el momento...</p>
+        </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>
+
+</div>

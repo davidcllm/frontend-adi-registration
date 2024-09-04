@@ -1,0 +1,16 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-sm-4 shadow p-3">
+    <h5 class="text-center">Escanear código QR</h5>
+    <div class="row text-center">
+      <a id="btn-scan-qr" (click)="encenderCamara()">
+        <!--img src="https://static.vecteezy.com/system/resources/previews/015/008/581/non_2x/qr-code-scanner-line-icon-scan-qrcode-linear-pictogram-technology-application-for-identification-product-outline-symbol-information-label-editable-stroke-isolated-illustration-vector.jpg" 
+        class="img-fluid text-center" width="175"-->
+      </a>
+      <canvas #qrCanvas [hidden]="!scanning" id="qr-canvas" class="img-fluid"></canvas>
+    </div>
+    <div class="row mx-5 my-3">
+      <button class="btn btn-primary btn-sm rounded-3 mb-2" (click)="encenderCamara()">Encender cámara</button>
+      <button class="btn btn-danger btn-sm rounded-3" (click)="cerrarCamara()">Detener cámara</button>
+    </div>
+  </div>
+</div>

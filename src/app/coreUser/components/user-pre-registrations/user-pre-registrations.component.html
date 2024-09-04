@@ -1,0 +1,89 @@
+<div class="container mt-4">
+    <!-- Título del calendario -->
+    <h4 class="text-center">Pre-Registros para ADI's</h4>
+</div>
+
+<br>
+
+<!-- Contenedor principal -->
+<div class="container" id="main-container">
+    <div class="row"> 
+      <!-- Bucle para mostrar cada prer -->
+      <div *ngFor="let preRegistration of preRegistrations" class="col-md-6 col-xl-3">
+        <div class="card m-b-30">
+          <div class="card-body row">
+            <div class="card-title align-self-center mb-0">
+              <!-- aprob y id del pre re -->
+              <h5>{{preRegistration?.aprobado}}</h5>
+              <p class="m-0">ID del registro: {{preRegistration?.id}}</p>
+              <p class="m-0">ID del evento: {{preRegistration?.event?.id}}</p>
+              <p class="m-0">Tipo de evento: {{preRegistration?.event?.tipo}}</p>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <!-- Estado de escaneo -->
+            <li class="list-group-item">
+              Escaneo: 
+              <span *ngIf="preRegistration?.scan; else crossMark">
+                <i class="fa fa-check" style="color: orange;"></i>
+              </span>
+              <ng-template #crossMark>
+                <i class="fa fa-times" style="color: red;"></i>
+              </ng-template>
+            </li>
+            <!-- id del usuario -->
+            <li class="list-group-item">ID de usuario: {{preRegistration?.user?.id}}</li>
+            <li class="list-group-item">Evento: {{preRegistration?.event?.eventName}}</li>
+            <li class="list-group-item"><i class="fa fa-calendar float-right"></i>Fecha del evento: {{formatDate(preRegistration?.event?.fecha)}}</li>
+            <li class="list-group-item">Hora del evento: {{formatTime(preRegistration?.event?.hora)}}</li>
+          </ul>
+          <div class="card-body">
+            <!-- Botones para editar y eliminar eventos -->
+            <div class="float-right btn-group btn-group-sm">
+              <a (click)="onOpenModal(preRegistration, 'generate')" class="btn btn-primary tooltips" data-placement="top" data-original-title="qrcode"><i class="fa fa-qrcode"></i></a>
+              <a (click)="fileInput.click()" class="btn btn-secondary tooltips" data-placement="top" data-original-title="photos"><i class="fa fa-photo"></i></a>
+
+              <input type="file" #fileInput (change)="onFileSelected($event, preRegistration?.id)" style="display: none;" accept="image/*">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para enseniar un qr -->
+    <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="qrModelLabel">QR del registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body text-center">
+            <div *ngIf="qrImageUrl">
+                <img [src]="qrImageUrl" alt="QR Code" />
+            </div>
+            <div *ngIf="!qrImageUrl">
+                <p>Cargando QR...</p>
+            </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        </div>
+    </div>
+  
+
+
+
+
+</div>
+
+<!-- Notificación de que no hay pre registros -->
+<div *ngIf="preRegistrations?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No hay pre-registros!</h4>
+      <p>No encontramos ningún pre-registro.</p>
+    </div>
+</div>

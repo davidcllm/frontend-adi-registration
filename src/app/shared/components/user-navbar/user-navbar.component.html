@@ -1,0 +1,29 @@
+<!-- Navbar para Usuarios -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ff6702;">
+    <a class="navbar-brand ml-3" style="color:white;">Registro de ADI's</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#userNavbar" aria-controls="userNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="userNavbar">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link ml-3" routerLink="/user/calendario" style="color:white;">Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ml-3" routerLink="/user/preregistros" style="color:white;">Pre Registros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ml-3" routerLink="/user/registros" style="color:white;">Registros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ml-3" routerLink="/perfil" style="color:white;">Perfil</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link ml-3" (click)="logout()" style="color:white;">Cerrar Sesión</a>
+        </li>
+      </ul>
+    </div>
+</nav>
+  

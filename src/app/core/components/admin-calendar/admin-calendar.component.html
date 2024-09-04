@@ -1,0 +1,220 @@
+<div class="container mt-4">
+    <!-- Título del calendario -->
+    <h4 class="text-center">ADI's Disponibles</h4>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="row mb-3">
+      <!-- Botón para agregar evento -->
+      <div class="col-12">
+        <button (click)="onOpenModal(null, 'add')" class="btn btn-primary">
+          Agregar Evento
+        </button>
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <!-- Formulario de búsqueda -->
+      <div class="col-12">
+        <form class="form-inline">
+          <input
+            type="search"
+            (ngModelChange)="searchEvents(key.value)"
+            #key="ngModel"
+            ngModel
+            name="key"
+            id="searchName"
+            class="form-control"
+            placeholder="Buscar evento por ID..."
+          />
+        </form>
+      </div>
+    </div>
+</div>
+<!-- Contenedor principal -->
+<div class="container" id="main-container">
+    <div class="row"> 
+      <!-- Bucle para mostrar cada evento -->
+      <div *ngFor="let event of events" class="col-md-6 col-xl-3">
+        <div class="card m-b-30">
+          <div class="card-body row">
+            <div class="card-title align-self-center mb-0">
+              <!-- Nombre y fecha del evento -->
+              <h5>{{event?.eventName}}</h5>
+              <p class="m-0">{{event?.lugar}}</p>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <!-- Fecha del evento -->
+            <li class="list-group-item"><i class="fa fa-calendar float-right"></i>Fecha: {{formatDate(event?.fecha)}}</li>
+            <!-- Hora del evento -->
+            <li class="list-group-item">Hora: {{formatTime(event?.hora)}}<i class="fa-regular fa-clock float-right"></i></li>
+            <!-- Tipo de evento -->
+            <li class="list-group-item">Tipo: {{event?.tipo}}</li>
+            <!-- Id evento -->
+            <li class="list-group-item">ID del evento: {{event?.id}}</li>
+            <!-- cupo -->
+            <li class="list-group-item">cupo: {{event?.cupo}}</li>
+          </ul>
+          <div class="card-body">
+            <!-- Botones para editar y eliminar eventos -->
+            <div class="float-right btn-group btn-group-sm">
+              <a (click)="onOpenModal(event, 'edit')" id="edit-button" class="btn btn tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+              <a (click)="onOpenModal(event, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="d-flex justify-content-center my-4">
+      <button (click)="previousPage()" id="pag-button" class="btn btn" [disabled]="currentPage === 1">
+      <i class="fa fa-chevron-left"></i>
+      </button>
+      <span class="mx-3">Página {{currentPage}}</span>
+      <button (click)="nextPage()" id="pag-button" class="btn btn" [disabled]="currentPage * pageSize >= totalItems">
+      <i class="fa fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Modal para añadir un evento -->
+  <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEventModalLabel">Agregar Evento</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddEvent(addForm)">
+            <div class="form-group">
+              <label for="eventName">Nombre</label>
+              <input type="text" ngModel name="eventName" class="form-control" id="eventName" placeholder="Nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="date" ngModel name="fecha" class="form-control" id="fecha" placeholder="Fecha" required>
+            </div>
+            <div class="form-group">
+              <label for="hora">Hora (Formato 24 horas)</label>
+              <input type="time" ngModel name="hora" class="form-control" id="hora" placeholder="Hora" required>
+            </div>
+            <div class="form-group">
+              <label for="lugar">Lugar</label>
+              <input type="text" ngModel name="lugar" class="form-control" id="lugar" placeholder="Lugar" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <select ngModel name="tipo" class="form-control" id="tipo" required>
+                  <option value="" disabled selected>Selecciona el tipo de evento</option>
+                  <option value="ACADÉMICA">ACADÉMICA</option>
+                  <option value="ASUA">ASUA</option>
+                  <option value="CULTURAL">CULTURAL</option>
+                  <option value="SOCIEDAD">SOCIEDAD</option>
+                  <option value="DEPORTIVA">DEPORTIVA</option>
+                </select>
+              </div>
+            <div class="form-group">
+                <label for="cupo">Cupo</label>
+                <input type="number" ngModel name="cupo" class="form-control" id="cupo" placeholder="Cupo" required>
+              </div>
+            <div class="modal-footer">
+              <button type="button" id="add-event-form" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button [disabled]="addForm.invalid" type="submit" id="edit-event-form" class="btn btn">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para editar un evento -->
+  <div class="modal fade" id="updateEventModal" tabindex="-1" role="dialog" aria-labelledby="eventEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateEventModalLabel">Editar Evento {{editEvent?.eventName}} </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <label for="eventName">Nombre</label>
+              <input type="text" [ngModel]="editEvent?.eventName" name="eventName" class="form-control" id="eventName" placeholder="Nombre">
+            </div>
+            <input type="hidden" [ngModel]="editEvent?.id" name="id" class="form-control" id="id">
+            <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="date" [ngModel]="editEvent?.fecha" name="fecha" class="form-control" id="fecha" placeholder="Fecha">
+            </div>
+            <div class="form-group">
+              <label for="hora">Hora (Formato 24 horas)</label>
+              <input type="time" [ngModel]="editEvent?.hora" name="hora" class="form-control" id="hora" placeholder="Hora">
+            </div>
+            <div class="form-group">
+              <label for="lugar">Lugar</label>
+              <input type="text" [ngModel]="editEvent?.lugar" name="lugar" class="form-control" id="lugar" placeholder="Lugar">
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <select [ngModel]="editEvent?.tipo" name="tipo" class="form-control" id="tipo" required>
+                  <option value="" disabled selected>Selecciona el tipo de evento</option>
+                  <option value="ACADÉMICA">ACADÉMICA</option>
+                  <option value="ASUA">ASUA</option>
+                  <option value="CULTURAL">CULTURAL</option>
+                  <option value="SOCIEDAD">SOCIEDAD</option>
+                  <option value="DEPORTIVA">DEPORTIVA</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cupo">Cupo</label>
+                <input type="number" [ngModel]="editEvent?.cupo" name="cupo" class="form-control" id="cupo" placeholder="Cupo" required>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button (click)="onUpdateEvent(editForm.value)" data-dismiss="modal" id="edit-event-form" class="btn btn">Guardar Cambios</button>
+              <!--el boton va a insertar los datos recogidos en formato .json-->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para eliminar un evento -->
+  <div class="modal fade" id="deleteEventModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Eliminar Evento</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro que quieres eliminar el evento {{deleteEvent?.eventName}}?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button (click)="onDeleteEvent(deleteEvent!.id)" class="btn btn-danger" data-dismiss="modal">Sí</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Notificación de que no hay eventos -->
+<!--div *ngIf="events?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No hay eventos!</h4>
+      <p>No encontramos ningún evento.</p>
+    </div>
+</div-->
