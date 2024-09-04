@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiBaseUrl: 'https://adi-registration.com'
+    apiBaseUrl: 'https://158.101.22.42:8080'
 };
