@@ -53,7 +53,7 @@ export class UserCalendarComponent implements OnInit{
 
     this.userEventService.getEvents(token, page, this.pageSize).subscribe(
       (response: any) => {
-        this.events = response._embedded.eventList || [];
+        this.events = response._embedded?.eventList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
       },
