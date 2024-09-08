@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   templateUrl: './user-calendar.component.html',
   styleUrl: './user-calendar.component.css'
 })
-export class UserCalendarComponent implements OnInit{
+export class UserCalendarComponent implements OnInit {
   public events: Event[] = [];
   public totalItems: number = 0;
   public pageSize: number = 16;
