@@ -37,24 +37,22 @@ export class UserPreRegistrationsComponent implements OnInit {
 
     return `${day}-${month}-${year}`;
   }*/
-    formatDate(date: any): string {
-      if (!date) return '';
-    
-      // Normalizamos la fecha en caso de ser una cadena ISO 8601
-      const d = new Date(date);
-    
-      // Comprueba si la fecha es válida
-      if (isNaN(d.getTime())) {
-        return 'Fecha no válida';
-      }
-    
-      // Utiliza toLocaleDateString() para manejar mejor la compatibilidad
-      return d.toLocaleDateString('es-MX', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-    }
+
+  formatDate(date: any): string {
+    if (!date) return '';
+  
+    const d = new Date(date);
+  
+    /*if (isNaN(d.getTime())) {
+      return 'Fecha no válida';
+    }*/
+
+    return d.toLocaleDateString('es-MX', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
     
 
   formatTime(time: any): string {
