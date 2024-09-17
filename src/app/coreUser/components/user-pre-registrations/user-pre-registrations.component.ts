@@ -38,23 +38,21 @@ export class UserPreRegistrationsComponent implements OnInit {
     return `${day}-${month}-${year}`;
   }*/
 
-    formatDate(date: any): string {
-      if (!date || !Array.isArray(date)) return 'Fecha no válida';
-    
-      const d = new Date(date[0], date[1] - 1, date[2]);
-    
-      if (isNaN(d.getTime())) {
-        return 'Fecha no válida';
-      }
-    
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-    
-      return `${day}-${month}-${year}`;
+  formatDate(date: any): string {
+    if (!date || !Array.isArray(date)) return 'Fecha no válida';
+  
+    const d = new Date(date[0], date[1] - 1, date[2]);
+  
+    if (isNaN(d.getTime())) {
+      return 'Fecha no válida';
     }
-    
-    
+  
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+  
+    return `${day}-${month}-${year}`;
+  }
 
   formatTime(time: any): string {
     if (!time || !Array.isArray(time)) return '';
