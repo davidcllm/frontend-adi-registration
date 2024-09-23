@@ -31,7 +31,7 @@
         <div class="modal-body">
           <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)">
             <div class="form-group">
-              <label for="id">ID de estudiante</label>
+              <label for="id">ID de estudiante (favor de omitir los primeros "00")</label>
               <input type="number" id="id" name="id" ngModel class="form-control" required>
             </div>
             <div class="form-group">
