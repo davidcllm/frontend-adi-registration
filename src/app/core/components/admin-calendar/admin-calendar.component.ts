@@ -59,6 +59,7 @@ export class AdminCalendarComponent implements OnInit {
         this.events = response._embedded?.eventList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
+        console.log(this.events);
       },
       (error: HttpErrorResponse) => {
         Swal.fire('Error. Su sesión ha expirado. Vuelva a iniciar sesión.');
