@@ -29,11 +29,12 @@ export class UserCalendarComponent implements OnInit {
 
   formatDate(date: any): string {
     if (!date) return '';
-    const d = new Date(date);
+    
+    const d = new Date(date + 'T00:00:00Z'); 
 
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0'); 
-    const day = String(d.getDate()).padStart(2, '0');
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, '0'); 
+    const day = String(d.getUTCDate()).padStart(2, '0');
 
     return `${day}-${month}-${year}`;
   }
