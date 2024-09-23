@@ -32,11 +32,12 @@ export class AdminCalendarComponent implements OnInit {
 
   formatDate(date: any): string {
     if (!date) return '';
-    const d = new Date(date);
+    
+    const d = new Date(date + 'T00:00:00Z'); 
 
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0'); 
-    const day = String(d.getDate()).padStart(2, '0');
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, '0'); 
+    const day = String(d.getUTCDate()).padStart(2, '0');
 
     return `${day}-${month}-${year}`;
   }
@@ -59,7 +60,6 @@ export class AdminCalendarComponent implements OnInit {
         this.events = response._embedded?.eventList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
-        console.log(this.events);
       },
       (error: HttpErrorResponse) => {
         Swal.fire('Error. Su sesión ha expirado. Vuelva a iniciar sesión.');
