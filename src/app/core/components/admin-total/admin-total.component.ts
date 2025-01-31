@@ -19,6 +19,7 @@ export class AdminTotalComponent implements OnInit {
   public totalItems: number = 0;
   public pageSize: number = 16;
   public currentPage: number = 1;
+  public searchKey: string = "";
 
   constructor(private eventService: EventService) {}
 
@@ -34,6 +35,10 @@ export class AdminTotalComponent implements OnInit {
         this.totals = response._embedded.totalList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
+
+        if(this.searchKey) {
+          this.searchTotals(this.searchKey)
+        }
       },
       (error: HttpErrorResponse) => {
         Swal.fire('Error. Su sesión ha expirado. Vuelva a iniciar sesión.');
@@ -56,9 +61,12 @@ export class AdminTotalComponent implements OnInit {
   }
 
   public searchTotals(key: string): void {
+    this.searchKey = key;
     const results: Total[] = [];
     for(const total of this.totals) {
-      if(total.user.id.toString().indexOf(key) !== -1 
+      if(
+        total.user.id.toString().indexOf(key) !== -1 || 
+        total.user.carrera.toString().indexOf(key) !== -1
       ) {
         results.push(total);
       }
