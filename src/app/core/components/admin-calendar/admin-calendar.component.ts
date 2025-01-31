@@ -143,9 +143,9 @@ export class AdminCalendarComponent implements OnInit {
     }
 
     this.events = results;
-    if(results.length === 0 || !key) {
+    /*if(results.length === 0 || !key) {
       this.getEvents(this.currentPage);
-    }
+    }*/
   }
 
   public onOpenModal(event: Event | null, mode: string): void { 
