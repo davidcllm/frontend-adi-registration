@@ -108,7 +108,7 @@ export class UserPreRegistrationsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         if(error.status !== 200) {
-          Swal.fire('Error al subir la foto. El archivo excede los 350kb, el código qr aún no ha sido escaneado o ya hay una foto en este registro.');
+          Swal.fire('Error al subir la foto. El archivo excede 1MB o ya hay una foto en este registro.');
         }
         else {
           Swal.fire('Foto subida exitosamente.')
