@@ -22,6 +22,7 @@ export class AdminRegistrationsComponent implements OnInit {
   public editRegistration!: Registration;
   public deleteRegistration!: Registration;
   public imageUrl: string = "";
+  public searchKey: string = "";
 
   constructor(private eventService: EventService) {}
 
@@ -37,6 +38,10 @@ export class AdminRegistrationsComponent implements OnInit {
         this.registrations = response._embedded?.registrationList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
+
+        if(this.searchKey) {
+          this.searchTotals(this.searchKey)
+        }
       },
       (error: HttpErrorResponse) => {
         Swal.fire('Error. Su sesión ha expirado. Vuelva a iniciar sesión.');
@@ -103,6 +108,7 @@ export class AdminRegistrationsComponent implements OnInit {
   }
 
   public searchTotals(key: string): void { 
+    this.searchKey = key;
     const results: Registration[] = [];
     for(const registration of this.registrations) {
       if(
