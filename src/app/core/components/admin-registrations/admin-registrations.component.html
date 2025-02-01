@@ -36,7 +36,7 @@
           <th>ID de Registro</th>
           <th>Estado de Aprobación</th>
           <th>Fotos</th>
-          <th>Disponibilidad de Fotos</th>
+          <!--th>Disponibilidad de Fotos</th-->
           <th>Escaneo</th>
           <th>ID de Evento</th>
           <th>Nombre de Evento</th>
@@ -51,14 +51,14 @@
           <td>{{registration?.id}}</td>
           <td>{{registration?.aprobado}}</td>
           <td><a (click)="onOpenModal(registration, 'photo')" class="btn btn tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-photo"></i> </a></td>
-          <td>
+          <!--td>
             <span *ngIf="imageUrl != ''; else crossMark">
               <i class="fa fa-check" style="color: orange;"></i>
             </span>
             <ng-template #crossMark>
               <i class="fa fa-times" style="color: red;"></i>
             </ng-template>
-          </td>
+          </td-->
           <td>
             <span *ngIf="registration?.scan; else crossMark">
               <i class="fa fa-check" style="color: orange;"></i>
