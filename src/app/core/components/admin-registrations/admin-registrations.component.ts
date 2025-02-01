@@ -35,7 +35,6 @@ export class AdminRegistrationsComponent implements OnInit {
 
     this.eventService.getRegistrations(token, page, this.pageSize).subscribe(
       (response: any) => {
-        console.log(response)
         this.registrations = response._embedded?.registrationList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
