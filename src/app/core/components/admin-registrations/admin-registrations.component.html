@@ -52,7 +52,7 @@
           <td>{{registration?.aprobado}}</td>
           <td><a (click)="onOpenModal(registration, 'photo')" class="btn btn tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-photo"></i> </a></td>
           <td>
-            <span *ngIf="imageUrl != ""; else crossMark">
+            <span *ngIf="imageUrl != ''; else crossMark">
               <i class="fa fa-check" style="color: orange;"></i>
             </span>
             <ng-template #crossMark>
