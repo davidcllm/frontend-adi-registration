@@ -52,14 +52,14 @@ export class AdminRegistrationsComponent implements OnInit {
   public nextPage(): void {
     if (this.currentPage * this.pageSize < this.totalItems) {
       this.currentPage++;
-      this.getRegistrations(this.currentPage);
+      this.getRegistrations(this.currentPage, this.searchKey);
     }
   }
 
   public previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getRegistrations(this.currentPage);
+      this.getRegistrations(this.currentPage, this.searchKey);
     }
   }
 
