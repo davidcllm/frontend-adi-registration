@@ -33,7 +33,7 @@ export class AdminRegistrationsComponent implements OnInit {
   public getRegistrations(page: number, searchKey: string = ''): void {
     const token = localStorage.getItem('token');
 
-    this.eventService.getRegistrations(token, page, this.pageSize, this.searchKey).subscribe(
+    this.eventService.getRegistrations(token, page, this.pageSize, searchKey).subscribe(
       (response: any) => {
         this.registrations = response._embedded?.registrationList || [];
         this.totalItems = response.page?.totalElements || 0;
