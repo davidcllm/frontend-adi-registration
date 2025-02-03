@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 export class AdminRegistrationsComponent implements OnInit {
   public registrations: Registration[] = [];
   public totalItems: number = 0;
+  public totalPages: number = 0
   public pageSize: number = 16;
   public currentPage: number = 1;
   public editRegistration!: Registration;
@@ -37,6 +38,7 @@ export class AdminRegistrationsComponent implements OnInit {
       (response: any) => {
         this.registrations = response._embedded?.registrationList || [];
         this.totalItems = response.page?.totalElements || 0;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.currentPage = page;
 
         /*if(this.searchKey) {
