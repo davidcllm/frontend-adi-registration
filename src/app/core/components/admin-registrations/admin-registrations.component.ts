@@ -124,6 +124,9 @@ export class AdminRegistrationsComponent implements OnInit {
     /*if(results.length === 0 || !key) {
       this.getRegistrations(this.currentPage);
     }*/
+   if(key === "") {
+    this.getRegistrations(this.currentPage);
+   }
   }
 
   public searchPhoto(id: number) {

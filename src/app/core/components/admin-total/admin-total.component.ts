@@ -76,6 +76,9 @@ export class AdminTotalComponent implements OnInit {
     /*if(results.length === 0 || !key) {
       this.getTotals(this.currentPage);
     }*/
+   if(key === "") {
+    this.getTotals(this.currentPage);
+   }
   }
 
 }
