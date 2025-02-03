@@ -30,18 +30,18 @@ export class AdminRegistrationsComponent implements OnInit {
     this.getRegistrations(this.currentPage);
   }
 
-  public getRegistrations(page: number): void {
+  public getRegistrations(page: number, searchKey: string = ''): void {
     const token = localStorage.getItem('token');
 
-    this.eventService.getRegistrations(token, page, this.pageSize).subscribe(
+    this.eventService.getRegistrations(token, page, this.pageSize, this.searchKey).subscribe(
       (response: any) => {
         this.registrations = response._embedded?.registrationList || [];
         this.totalItems = response.page?.totalElements || 0;
         this.currentPage = page;
 
-        if(this.searchKey) {
+        /*if(this.searchKey) {
           this.searchTotals(this.searchKey)
-        }
+        }*/
       },
       (error: HttpErrorResponse) => {
         Swal.fire('Error. Su sesión ha expirado. Vuelva a iniciar sesión.');
@@ -109,24 +109,7 @@ export class AdminRegistrationsComponent implements OnInit {
 
   public searchTotals(key: string): void { 
     this.searchKey = key;
-    const results: Registration[] = [];
-    for(const registration of this.registrations) {
-      if(
-        registration.user.id.toString().indexOf(key) !== -1 ||
-        registration.aprobado.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        registration.event.eventName.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      ) {
-        results.push(registration);
-      }
-    }
-
-    this.registrations = results;
-    /*if(results.length === 0 || !key) {
-      this.getRegistrations(this.currentPage);
-    }*/
-   if(key === "") {
-    this.getRegistrations(this.currentPage);
-   }
+    this.getRegistrations(1, key)
   }
 
   public searchPhoto(id: number) {

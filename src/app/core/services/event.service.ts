@@ -52,7 +52,7 @@ export class EventService {
 
   //Tabla registros
 
-  getRegistrations(token: string | null, page: number, size: number): Observable<Registration[]> {
+  getRegistrations(token: string | null, page: number, size: number, searchKey: string = ''): Observable<Registration[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>(`${this.apiUrl}/admin/registration/all?page=${page - 1}&size=${size}`, { headers });
   }
