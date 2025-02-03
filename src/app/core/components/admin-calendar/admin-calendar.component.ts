@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 export class AdminCalendarComponent implements OnInit {
   public events: Event[] = [];
   public totalItems: number = 0;
+  public totalPages: number = 0;
   public pageSize: number = 16;
   public currentPage: number = 1;
   public editEvent!: Event;
@@ -59,6 +60,7 @@ export class AdminCalendarComponent implements OnInit {
       (response: any) => {
         this.events = response._embedded?.eventList || [];
         this.totalItems = response.page?.totalElements || 0;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.currentPage = page;
       },
       (error: HttpErrorResponse) => {

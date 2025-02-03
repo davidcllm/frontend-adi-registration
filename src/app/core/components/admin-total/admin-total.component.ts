@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 export class AdminTotalComponent implements OnInit {
   public totals: Total[] = [];
   public totalItems: number = 0;
+  public totalPages: number = 0;
   public pageSize: number = 16;
   public currentPage: number = 1;
   public searchKey: string = "";
@@ -34,6 +35,7 @@ export class AdminTotalComponent implements OnInit {
       (response: any) => {
         this.totals = response._embedded.totalList || [];
         this.totalItems = response.page?.totalElements || 0;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.currentPage = page;
 
         if(this.searchKey) {
