@@ -24,6 +24,7 @@ export class AdminCalendarComponent implements OnInit {
   public currentPage: number = 1;
   public editEvent!: Event;
   public deleteEvent!: Event;
+  public searchKey: string = "";
 
   constructor(private eventService: EventService) {}
 
@@ -53,10 +54,10 @@ export class AdminCalendarComponent implements OnInit {
     return time; 
   }
 
-  public getEvents(page: number): void {
+  public getEvents(page: number, searchKey: string = ''): void {
     const token = localStorage.getItem('token');
 
-    this.eventService.getEvents(token, page, this.pageSize).subscribe(
+    this.eventService.getEvents(token, page, this.pageSize, searchKey).subscribe(
       (response: any) => {
         this.events = response._embedded?.eventList || [];
         this.totalItems = response.page?.totalElements || 0;
@@ -72,14 +73,14 @@ export class AdminCalendarComponent implements OnInit {
   public nextPage(): void {
     if (this.currentPage * this.pageSize < this.totalItems) {
       this.currentPage++;
-      this.getEvents(this.currentPage);
+      this.getEvents(this.currentPage, this.searchKey);
     }
   }
 
   public previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getEvents(this.currentPage);
+      this.getEvents(this.currentPage, this.searchKey);
     }
   }
 
@@ -137,20 +138,8 @@ export class AdminCalendarComponent implements OnInit {
   }
 
   public searchEvents(key: string): void {
-    const results: Event[] = [];
-    for(const event of this.events) {
-      if(event.id.toString().indexOf(key) !== -1) {
-        results.push(event);
-      }
-    }
-
-    this.events = results;
-    /*if(results.length === 0 || !key) {
-      this.getEvents(this.currentPage);
-    }*/
-   if(key === "") {
-    this.getEvents(this.currentPage);
-   }
+    this.searchKey = key;
+    this.getEvents(1, key);
   }
 
   public onOpenModal(event: Event | null, mode: string): void { 

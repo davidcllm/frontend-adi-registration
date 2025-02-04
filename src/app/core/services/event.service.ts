@@ -16,9 +16,9 @@ export class EventService {
 
   //Eventos
 
-  getEvents(token: string | null, page: number, size: number): Observable<Event[]> {
+  getEvents(token: string | null, page: number, size: number, searchKey: string = ''): Observable<Event[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/admin/event/all?page=${page - 1}&size=${size}`, { headers });
+    return this.http.get<any>(`${this.apiUrl}/admin/event/all?page=${page - 1}&size=${size}&searchKey=${encodeURIComponent(searchKey)}`, { headers });
   }
 
   addEvent(event: Event, token: string | null): Observable<Event> {
@@ -38,9 +38,9 @@ export class EventService {
 
   //Tabla totales
 
-  getTotals(token: string | null, page: number, size: number): Observable<Total[]> {
+  getTotals(token: string | null, page: number, size: number, searchKey: string = ''): Observable<Total[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/admin/total/all?page=${page - 1}&size=${size}`, { headers });
+    return this.http.get<any>(`${this.apiUrl}/admin/total/all?page=${page - 1}&size=${size}&searchKey=${encodeURIComponent(searchKey)}`, { headers });
   }
 
   //Escaneo

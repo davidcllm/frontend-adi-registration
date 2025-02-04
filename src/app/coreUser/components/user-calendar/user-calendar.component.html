@@ -18,7 +18,7 @@
             name="key"
             id="searchName"
             class="form-control"
-            placeholder="Buscar evento por ID..."
+            placeholder="Buscar evento por ID o Nombre de Evento..."
           />
         </form>
       </div>
@@ -65,8 +65,8 @@
       <button (click)="previousPage()" id="pag-button" class="btn btn" [disabled]="currentPage === 1">
       <i class="fa fa-chevron-left"></i>
       </button>
-      <span class="mx-3">Página {{currentPage}}</span>
-      <button (click)="nextPage()" id="pag-button" class="btn btn" [disabled]="currentPage * pageSize >= totalItems">
+      <span class="mx-3">Página {{currentPage}} de {{totalPages}}</span>
+      <button (click)="nextPage()" id="pag-button" class="btn btn" [disabled]="currentPage >= totalPages">
       <i class="fa fa-chevron-right"></i>
       </button>
     </div>

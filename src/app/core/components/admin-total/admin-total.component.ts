@@ -28,10 +28,10 @@ export class AdminTotalComponent implements OnInit {
     this.getTotals(this.currentPage);
   }
 
-  public getTotals(page: number): void {
+  public getTotals(page: number, searchKey: string = ''): void {
     const token = localStorage.getItem('token');
 
-    this.eventService.getTotals(token, page, this.pageSize).subscribe(
+    this.eventService.getTotals(token, page, this.pageSize, searchKey).subscribe(
       (response: any) => {
         this.totals = response._embedded.totalList || [];
         this.totalItems = response.page?.totalElements || 0;
@@ -51,36 +51,20 @@ export class AdminTotalComponent implements OnInit {
   public nextPage(): void {
     if (this.currentPage * this.pageSize < this.totalItems) {
       this.currentPage++;
-      this.getTotals(this.currentPage);
+      this.getTotals(this.currentPage, this.searchKey);
     }
   }
 
   public previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getTotals(this.currentPage);
+      this.getTotals(this.currentPage, this.searchKey);
     }
   }
 
   public searchTotals(key: string): void {
     this.searchKey = key;
-    const results: Total[] = [];
-    for(const total of this.totals) {
-      if(
-        total.user.id.toString().indexOf(key) !== -1 || 
-        total.user.carrera.toString().indexOf(key) !== -1
-      ) {
-        results.push(total);
-      }
-    }
-
-    this.totals = results;
-    /*if(results.length === 0 || !key) {
-      this.getTotals(this.currentPage);
-    }*/
-   if(key === "") {
-    this.getTotals(this.currentPage);
-   }
+    this.getTotals(1, key);
   }
 
 }

@@ -111,7 +111,7 @@ export class AdminRegistrationsComponent implements OnInit {
 
   public searchTotals(key: string): void { 
     this.searchKey = key;
-    this.getRegistrations(1, key)
+    this.getRegistrations(1, key);
   }
 
   public searchPhoto(id: number) {

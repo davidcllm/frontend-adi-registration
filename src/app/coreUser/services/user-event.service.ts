@@ -16,9 +16,9 @@ export class UserEventService {
 
   //eventos
 
-  getEvents(token: string | null, page: number, size: number): Observable<Event[]> {
+  getEvents(token: string | null, page: number, size: number, searchKey: string = ''): Observable<Event[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/user/event/all?page=${page - 1}&size=${size}`, { headers });
+    return this.http.get<any>(`${this.apiUrl}/user/event/all?page=${page - 1}&size=${size}&size=${size}&searchKey=${encodeURIComponent(searchKey)}`, { headers });
   }
 
   registerToEvent(eventId: number, token: string | null): Observable<void> {

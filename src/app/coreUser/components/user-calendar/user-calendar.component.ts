@@ -17,9 +17,11 @@ import Swal from 'sweetalert2';
 export class UserCalendarComponent implements OnInit {
   public events: Event[] = [];
   public totalItems: number = 0;
+  public totalPages: number = 0;
   public pageSize: number = 16;
   public currentPage: number = 1;
   public registerEvent!: Event;
+  public searchKey: string = "";
 
   constructor(private userEventService: UserEventService) {}
 
@@ -49,13 +51,14 @@ export class UserCalendarComponent implements OnInit {
     return time; 
   }
 
-  public getEvents(page: number): void {
+  public getEvents(page: number, searchKey: string = ''): void {
     const token = localStorage.getItem('token');
 
-    this.userEventService.getEvents(token, page, this.pageSize).subscribe(
+    this.userEventService.getEvents(token, page, this.pageSize, searchKey).subscribe(
       (response: any) => {
         this.events = response._embedded?.eventList || [];
         this.totalItems = response.page?.totalElements || 0;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.currentPage = page;
       },
       (error: HttpErrorResponse) => {
@@ -67,14 +70,14 @@ export class UserCalendarComponent implements OnInit {
   public nextPage(): void {
     if (this.currentPage * this.pageSize < this.totalItems) {
       this.currentPage++;
-      this.getEvents(this.currentPage);
+      this.getEvents(this.currentPage, this.searchKey);
     }
   }
 
   public previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getEvents(this.currentPage);
+      this.getEvents(this.currentPage, this.searchKey);
     }
   }
 
@@ -96,20 +99,8 @@ export class UserCalendarComponent implements OnInit {
   }
 
   public searchEvents(key: string): void {
-    const results: Event[] = [];
-    for(const event of this.events) {
-      if(event.id.toString().indexOf(key) !== -1) {
-        results.push(event);
-      }
-    }
-
-    this.events = results;
-    /*if(results.length === 0 || !key) {
-      this.getEvents(this.currentPage);
-    }*/
-   if(key === "") {
-    this.getEvents(this.currentPage);
-   }
+    this.searchKey = key;
+    this.getEvents(1, key);
   }
 
   public onOpenModal(event: Event | null, mode: string): void { 
