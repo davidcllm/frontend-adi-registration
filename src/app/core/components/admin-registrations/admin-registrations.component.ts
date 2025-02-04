@@ -70,7 +70,7 @@ export class AdminRegistrationsComponent implements OnInit {
 
     this.eventService.patchApprovalStatus(registrationId, status, token).subscribe({
       next: (response: string) => {
-        this.getRegistrations(this.currentPage);
+        this.getRegistrations(this.currentPage, this.searchKey);
       },
       error: (error: HttpErrorResponse) => {
         if(error.status !== 200) {
