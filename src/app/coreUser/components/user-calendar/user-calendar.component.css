@@ -1,3 +1,6 @@
+#main-container {
+    min-height: 650px;
+}
 #searchName {
     width: 300px;
 }
