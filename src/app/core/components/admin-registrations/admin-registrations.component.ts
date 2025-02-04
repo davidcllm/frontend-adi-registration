@@ -92,14 +92,14 @@ export class AdminRegistrationsComponent implements OnInit {
 
     this.eventService.deleteRegistration(registrationId, token).subscribe({
       next: (response: string) => {
-        this.getRegistrations(this.currentPage);
+        this.getRegistrations(this.currentPage, this.searchKey);
       },
       error: (error: HttpErrorResponse) => {
         if(error.status !== 200) {
           Swal.fire('Error. El registro no se puede eliminar porque ya no se encuentra en estado de ESPERA o el qr ya fue escaneado.');
         }
         if(error.status === 200) {
-          this.getRegistrations(this.currentPage);
+          this.getRegistrations(this.currentPage, this.searchKey);
           Swal.fire('Registro eliminado exitosamente.');
         }
       },
