@@ -38,9 +38,9 @@ export class AdminTotalComponent implements OnInit {
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.currentPage = page;
 
-        if(this.searchKey) {
+        /*if(this.searchKey) {
           this.searchTotals(this.searchKey)
-        }
+        }*/
       },
       (error: HttpErrorResponse) => {
         Swal.fire('Error. Su sesión ha expirado. Vuelva a iniciar sesión.');
