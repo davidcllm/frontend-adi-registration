@@ -77,7 +77,7 @@ export class AdminRegistrationsComponent implements OnInit {
           Swal.fire('Error. El registro ya no se encuentra en estado de ESPERA o el código qr aún no ha sido escaneado.');
         }
         if(error.status === 200) {
-          this.getRegistrations(this.currentPage);
+          this.getRegistrations(this.currentPage, this.searchKey);
           Swal.fire('Estatus de aprobación modificado exitosamente.')
         }
       },
