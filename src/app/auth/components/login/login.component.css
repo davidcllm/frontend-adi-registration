@@ -1,9 +1,52 @@
-  #login-button {
-    background-color: #ff6702;
-    color: white;
-  }
-  #register-button {
-    background-color: #ff6702;
-    color: white;
-  }
-  
+#login-button {
+  background-color: #ff6702;
+  color: white;
+}
+#register-button {
+  background-color: #ff6702;
+  color: white;
+}
+.toggle-password {
+  position: absolute;
+  top: 54.5%;
+  right: 35px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.toggle-password i {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.toggle-password-register {
+  position: absolute;
+  top: 33.75%;
+  right: 28px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.toggle-password-register i {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.toggle-password-confirm {
+  position: absolute;
+  top: 45.9%;
+  right: 28px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.toggle-password-confirm i {
+  font-size: 1.1rem;
+  color: #666;
+}

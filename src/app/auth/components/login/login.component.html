@@ -8,7 +8,11 @@
         </div>
         <div class="form-group">
           <label for="password">Contraseña</label>
-          <input type="password" id="password" name="password" ngModel class="form-control" required>
+          <input type="password" id="login-password" name="password" ngModel class="form-control" required>
+          <button type="button" (click)="showPasswordLogin()" class="btn toggle-password">
+            <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+            <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+          </button>
         </div>
         <button type="submit" class="btn btn btn-block" id="login-button" [disabled]="loginForm.invalid">Login</button> <!--(click)="onLogin(loginForm.value)"-->
       </form>
@@ -40,7 +44,19 @@
             </div>
             <div class="form-group">
               <label for="password">Contraseña</label>
-              <input type="password" id="password" name="password" ngModel class="form-control" required>
+              <input type="password" id="register-password" name="password" [(ngModel)]="password" class="form-control" required>
+              <button type="button" (click)="showPasswordRegister()" class="btn toggle-password-register">
+                <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+              </button>
+            </div>
+            <div class="form-group">
+              <label for="password">Confirmar Contraseña</label>
+              <input type="password" id="confirm-password" name="password" [(ngModel)]="confirmPassword" class="form-control" required>
+              <!--button type="button" (click)="showPasswordConfirm()" class="btn toggle-password-confirm">
+                <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+              </button-->
             </div>
             <div class="form-group">
               <label for="firstName">Nombre</label>
@@ -63,7 +79,7 @@
           </div>
             <div class="modal-footer">
               <button type="button" id="register-user-form" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="submit" id="register-button" class="btn btn" [disabled]="registerForm.invalid">Registrar</button>
+              <button type="submit" id="register-button" class="btn btn" [disabled]="registerForm.invalid || passwordMismatch">Registrar</button>
             </div>
           </form>
         </div>

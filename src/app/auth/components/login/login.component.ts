@@ -20,9 +20,17 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {  
+export class LoginComponent { 
+  password: string = '';
+  confirmPassword: string = '';
+  show: boolean = false;
+  
   constructor(private authService: AuthService, private authStateService: AuthStateService, private route: Router) {}  
 
+  public get passwordMismatch(): boolean {
+    return this.password !== this.confirmPassword;
+  }
+  
   public onLogin(loginForm: NgForm): void {
     document.getElementById('register-user-form')?.click();
 
@@ -92,4 +100,31 @@ export class LoginComponent {
     container?.appendChild(button);
     button.click();
   }
+
+  showPasswordLogin(): void {
+    this.show = !this.show;
+
+    const passwordInput = document.getElementById('login-password') as HTMLInputElement;
+    if (passwordInput) {
+      passwordInput.type = this.show ? 'text' : 'password';
+    }
+  }
+
+  showPasswordRegister(): void {
+    this.show = !this.show;
+
+    const passwordInput = document.getElementById('register-password') as HTMLInputElement;
+    if (passwordInput) {
+      passwordInput.type = this.show ? 'text' : 'password';
+    }
+  }
+
+  /*showPasswordConfirm(): void {
+    this.show = !this.show;
+
+    const passwordInput = document.getElementById('confirm-password') as HTMLInputElement;
+    if (passwordInput) {
+      passwordInput.type = this.show ? 'text' : 'password';
+    }
+  }*/
 }
