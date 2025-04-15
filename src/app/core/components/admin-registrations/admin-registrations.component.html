@@ -40,6 +40,7 @@
           <th>Escaneo</th>
           <th>ID de Evento</th>
           <th>Nombre de Evento</th>
+          <th>Lugar</th>
           <th>Aprobar</th>
           <th>Eliminar</th>
         </tr>
@@ -69,6 +70,7 @@
           </td>
           <td>{{registration?.event?.id}}</td>
           <td>{{registration?.event?.eventName}}</td>
+          <td>{{registration?.event?.lugar}}</td>
           <td><a (click)="onOpenModal(registration, 'edit')"  class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a></td>
           <td><a (click)="onOpenModal(registration, 'delete')" class="btn btn-warning tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a></td>
         </tr>
