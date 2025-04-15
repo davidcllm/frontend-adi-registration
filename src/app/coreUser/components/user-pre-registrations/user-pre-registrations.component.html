@@ -36,6 +36,7 @@
             <li class="list-group-item">Evento: {{preRegistration?.event?.eventName}}</li>
             <li class="list-group-item"><i class="fa fa-calendar float-right"></i>Fecha del evento: {{formatDate(preRegistration?.event?.fecha)}}</li>
             <li class="list-group-item">Hora del evento: {{formatTime(preRegistration?.event?.hora)}} hrs</li>
+            <li class="list-group-item">Lugar: {{registration?.event?.lugar}} hrs</li>
           </ul>
           <div class="card-body">
             <!-- Botones para editar y eliminar eventos -->
@@ -73,11 +74,6 @@
         </div>
         </div>
     </div>
-  
-
-
-
-
 </div>
 
 <!-- Notificación de que no hay pre registros -->
