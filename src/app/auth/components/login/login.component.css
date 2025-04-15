@@ -8,7 +8,7 @@
 }
 .toggle-password {
   position: absolute;
-  top: 54.5%;
+  top: 222.5px;
   right: 35px;
   transform: translateY(-50%);
   border: none;
@@ -23,7 +23,7 @@
 
 .toggle-password-register {
   position: absolute;
-  top: 33.75%;
+  top: 238px;
   right: 28px;
   transform: translateY(-50%);
   border: none;
