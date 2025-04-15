@@ -6,10 +6,13 @@
   background-color: #ff6702;
   color: white;
 }
+.form-group {
+  position: relative;
+}
 .toggle-password {
   position: absolute;
-  top: 222.5px;
-  right: 35px;
+  top: 70%;
+  right: 10px;
   transform: translateY(-50%);
   border: none;
   background: transparent;
@@ -23,8 +26,8 @@
 
 .toggle-password-register {
   position: absolute;
-  top: 238px;
-  right: 28px;
+  top: 70%;
+  right: 10px;
   transform: translateY(-50%);
   border: none;
   background: transparent;
@@ -38,8 +41,8 @@
 
 .toggle-password-confirm {
   position: absolute;
-  top: 45.9%;
-  right: 28px;
+  top: 70%;
+  right: 10px;
   transform: translateY(-50%);
   border: none;
   background: transparent;
