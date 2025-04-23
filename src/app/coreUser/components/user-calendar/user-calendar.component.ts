@@ -90,7 +90,7 @@ export class UserCalendarComponent implements OnInit {
         Swal.fire('Te has inscrito al evento exitosamente.');
       },
       error: (error: HttpErrorResponse) => {
-        Swal.fire('Error. El evento está a 40 minutos de empezar, ya estás registrado al evento o ya no hay cupo.');
+        Swal.fire('Error. Ya estás registrado al evento o ya no hay cupo.');
       },
       complete: () => {
         console.log('Registro a evento exitoso');
